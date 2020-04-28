@@ -21,8 +21,11 @@ export class CreateUserAccoutUC {
 
       auth.sendEmailVerification()
 
+      const newToken = await auth.getToken()
+
       return ( {
-        message: "sucesso"
+        message: "Successfully logged in",
+        token: newToken
       } )
     }catch( err ){
       throw {
@@ -42,4 +45,5 @@ interface CreateUserAccoutInput {
 
 interface CreateUserAccoutOutput {
   message: string
+  token: string
 }

@@ -3,7 +3,7 @@ import { BadRequestError } from "../business/errors/badRequestError"
 
 export class FirebaseAuth {
   public async getToken(): Promise<string>{
-    const newToken = await firebase.auth().currentUser?.getIdToken()
+    const newToken = await firebase.auth().currentUser?.getIdToken( true )
 
     if( !newToken ){
       throw new BadRequestError( "The token could not be generated" )
