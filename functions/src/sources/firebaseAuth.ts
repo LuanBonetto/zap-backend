@@ -1,4 +1,5 @@
 import firebase from "firebase"
+
 import { BadRequestError } from "../business/errors/badRequestError"
 
 export class FirebaseAuth {
