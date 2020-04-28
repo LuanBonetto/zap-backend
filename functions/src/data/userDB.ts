@@ -19,4 +19,13 @@ export class UserDB extends BaseDB implements UserGateway {
       throw new BadRequestError( err.message )
     }
   }
+
+  public async login( email:string, password: string ): Promise<void>{
+    try{
+      await this.dbFirebase.auth().signInWithEmailAndPassword( email, password )
+
+    }catch( err ){
+      throw new BadRequestError( err.message )
+    }
+  }
 }

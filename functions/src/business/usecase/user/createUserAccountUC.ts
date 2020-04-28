@@ -24,7 +24,7 @@ export class CreateUserAccoutUC {
       const newToken = await auth.getToken()
 
       return ( {
-        message: "Successfully logged in",
+        message: "Registered successfully",
         token: newToken
       } )
     }catch( err ){
