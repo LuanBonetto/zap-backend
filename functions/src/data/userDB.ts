@@ -28,4 +28,13 @@ export class UserDB extends BaseDB implements UserGateway {
       throw new BadRequestError( err.message )
     }
   }
+
+  public async redefinePassword( email:string ): Promise<void>{
+    try{
+      await this.dbFirebase.auth().sendPasswordResetEmail( email )
+
+    }catch( err ){
+      throw new BadRequestError( err.message )
+    }
+  }
 }
