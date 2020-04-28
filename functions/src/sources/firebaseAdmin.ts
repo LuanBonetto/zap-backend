@@ -6,4 +6,12 @@ export class FirebaseAdmin {
 
     await firebaseAdmin.auth().verifyIdToken( token, checkRevoked )
   }
+
+  public async getIdOfToken( token:string ): Promise<string>{
+    const verifiedToken = await firebaseAdmin.auth().verifyIdToken( token )
+
+    const id = verifiedToken.uid
+
+    return id
+  }
 }
