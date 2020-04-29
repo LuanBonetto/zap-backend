@@ -5,16 +5,26 @@ import { UserGateway } from "../business/gateways/userGateway";
 
 export class UserDB extends BaseDB implements UserGateway {
 
+  private usersCollection = "users"
+  //private friendsCollection = "friendslist"
+
   public async createUserAccount( user:User ): Promise<void>{
     try{
-      await this.dbFirebase.auth().createUserWithEmailAndPassword( user.getEmail(), user.getPassword() )
+      const response = await this.dbFirebase.auth().createUserWithEmailAndPassword( user.getEmail(), user.getPassword() )
 
-      const newProfile = {
-        displayName: user.getNickname(),
-        photoURL: user.getPhoto()
+      const userId = response.user?.uid
+
+      if( !userId ){
+        throw new BadRequestError( "user id not found" )
       }
 
-      await this.dbFirebase.auth().currentUser?.updateProfile( newProfile )
+      await this.dbFirestore.collection( this.usersCollection ).doc( userId )
+      .set( {
+        nickname: user.getNickname(),
+        email: user.getEmail(),
+        photo: user.getPhoto()
+      } )
+
     }catch( err ){
       throw new BadRequestError( err.message )
     }
