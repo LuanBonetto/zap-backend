@@ -3,7 +3,8 @@ export class User {
     private nickname: string,
     private email: string,
     private password: string,
-    private photo: string
+    private photo: string,
+    private id?: string
   ){}
 
   public getNickname():string {
@@ -14,11 +15,15 @@ export class User {
     return this.email
   }
 
-  public getPassword():string{
+  public getPassword():string {
     return this.password
   }
 
-  public getPhoto():string{
+  public getPhoto():string {
     return this.photo
+  }
+
+  public getId():string|undefined {
+    return this.id
   }
 }
