@@ -4,4 +4,5 @@ export interface UserGateway{
   createUserAccount( user:User ): Promise<void>
   login( email:string, password: string ): Promise<void>
   redefinePassword( email:string ): Promise<void>
+  sendFriendRequest( userId:string, friendEmail:string ): Promise<void>
 }

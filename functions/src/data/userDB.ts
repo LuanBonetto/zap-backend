@@ -6,6 +6,7 @@ import { UserGateway } from "../business/gateways/userGateway";
 export class UserDB extends BaseDB implements UserGateway {
 
   private usersCollection = "users"
+  private friendRequestsCollection = "friendRequests"
   //private friendsCollection = "friendslist"
 
   public async createUserAccount( user:User ): Promise<void>{
@@ -47,4 +48,17 @@ export class UserDB extends BaseDB implements UserGateway {
       throw new BadRequestError( err.message )
     }
   }
+
+  public async sendFriendRequest( userId:string, friendEmail:string ): Promise<void>{
+    try{
+      await this.dbFirestore.collection( this.friendRequestsCollection ).doc().set( {
+        senderUserId: userId,
+        receiverUserEmail: friendEmail
+      } )
+
+    }catch( err ){
+      throw new BadRequestError( err.message )
+    }
+  }
 }
+
