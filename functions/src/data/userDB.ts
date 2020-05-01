@@ -129,5 +129,14 @@ export class UserDB extends BaseDB implements UserGateway {
       throw new BadRequestError( err.message )
     }
   }
+
+  public async denyFriendRequest( requestId:string ): Promise<void>{
+    try{
+      await this.dbFirestore.collection( this.friendRequestsCollection ).doc( requestId ).delete()
+
+    }catch( err ){
+      throw new BadRequestError( err.message )
+    }
+  }
 }
 
