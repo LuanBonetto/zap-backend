@@ -6,6 +6,7 @@ import { redefinePasswordEndpoint } from './user/redefinePassword';
 import { sendMessageEndpoint } from './message/sendMessage';
 import { sendFriendRequestEndpoint } from './user/sendFriendRequest';
 import { getFriendRequestListEndpoint } from './user/getFriendRequestList';
+import { approveFriendRequestEndpoint } from './user/approveFriendRequest';
 
 
 const app = express();
@@ -18,5 +19,6 @@ app.put( '/user/redefinePassword', redefinePasswordEndpoint )
 app.post( '/message/send', sendMessageEndpoint )
 app.post( '/user/sendFriendRequest', sendFriendRequestEndpoint )
 app.get( '/user/getFriendRequestList', getFriendRequestListEndpoint )
+app.post( '/user/approveFriendRequest', approveFriendRequestEndpoint )
 
 export default app

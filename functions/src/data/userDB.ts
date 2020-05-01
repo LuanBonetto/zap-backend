@@ -7,7 +7,7 @@ export class UserDB extends BaseDB implements UserGateway {
 
   private usersCollection = "users"
   private friendRequestsCollection = "friendRequests"
-  //private friendsCollection = "friendslist"
+  private friendsCollection = "friendslist"
 
   public async createUserAccount( user:User ): Promise<void>{
     try{
@@ -74,13 +74,12 @@ export class UserDB extends BaseDB implements UserGateway {
       .get()
 
       const listOfRequests = result.docs.map( ( doc ) => {
-
         const request = {
+          requestId: doc.id,
           senderUserId: doc.data().senderUserId,
           senderNickname: doc.data().senderNickname,
           senderPhoto: doc.data().senderPhoto,
-          senderEmail: doc.data().senderEmail,
-          receiverUserEmail: doc.data().receiverUserEmail
+          senderEmail: doc.data().senderEmail
         }
 
         return request
@@ -104,6 +103,27 @@ export class UserDB extends BaseDB implements UserGateway {
       }
 
       return userInfo
+
+    }catch( err ){
+      throw new BadRequestError( err.message )
+    }
+  }
+
+  public async approveFriendRequest( userId:string, friendId: string, requestId:string ): Promise<void>{
+    try{
+      await this.dbFirestore.collection( this.friendsCollection ).doc()
+      .set( {
+        userId,
+        friendId
+      } )
+
+      await this.dbFirestore.collection( this.friendsCollection ).doc()
+      .set( {
+        userId: friendId,
+        friendId: userId
+      } )
+
+      await this.dbFirestore.collection( this.friendRequestsCollection ).doc( requestId ).delete()
 
     }catch( err ){
       throw new BadRequestError( err.message )

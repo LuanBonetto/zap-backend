@@ -7,4 +7,5 @@ export interface UserGateway{
   sendFriendRequest( userId:string, friendEmail:string ): Promise<void>
   getFriendRequestList( userEmail:string ): Promise<object[]>
   getUserById( userId:string ): Promise<object>
+  approveFriendRequest( userId:string, friendId: string, requestId:string ): Promise<void>
 }
