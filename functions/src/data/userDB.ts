@@ -67,17 +67,26 @@ export class UserDB extends BaseDB implements UserGateway {
     }
   }
 
-  public async getFriendRequestList( userEmail:string ): Promise<object>{
+  public async getFriendRequestList( userEmail:string ): Promise<object[]>{
     try{
       const result = await this.dbFirestore.collection( this.friendRequestsCollection )
       .where( "receiverUserEmail", "==", userEmail )
       .get()
 
-      const listUsersId = result.docs.map( ( doc ) => {
-        return doc.data()
+      const listOfRequests = result.docs.map( ( doc ) => {
+
+        const request = {
+          senderUserId: doc.data().senderUserId,
+          senderNickname: doc.data().senderNickname,
+          senderPhoto: doc.data().senderPhoto,
+          senderEmail: doc.data().senderEmail,
+          receiverUserEmail: doc.data().receiverUserEmail
+        }
+
+        return request
       } )
 
-      return listUsersId
+      return listOfRequests
 
     }catch( err ){
       throw new BadRequestError( err.message )

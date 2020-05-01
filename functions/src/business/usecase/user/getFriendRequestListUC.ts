@@ -32,5 +32,5 @@ interface GetFriendRequestListInput {
 }
 
 interface GetFriendRequestListOutput {
-  requestList: any
+  requestList: object[]
 }

@@ -5,6 +5,6 @@ export interface UserGateway{
   login( email:string, password: string ): Promise<void>
   redefinePassword( email:string ): Promise<void>
   sendFriendRequest( userId:string, friendEmail:string ): Promise<void>
-  getFriendRequestList( userEmail:string ): Promise<object>
+  getFriendRequestList( userEmail:string ): Promise<object[]>
   getUserById( userId:string ): Promise<object>
 }
